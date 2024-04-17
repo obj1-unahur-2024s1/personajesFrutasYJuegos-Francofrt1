@@ -1,0 +1,55 @@
+import src.personajes.*
+import src.frutas.*
+import src.juegos.*
+
+test "Martin no esta feliz" {
+  assert.notThat(martin.estaFeliz())
+}
+
+test "Martin compra una Manzana" {
+  martin.comprar(manzana)
+  assert.equals(manzana, martin.enLaDespensa())
+}
+
+test "Martin se alimenta con manzana que ya maduro" {
+    manzana.madurar()
+    martin.comprar(manzana)
+    martin.alimantarse()
+    assert.equals(80 + 14, martin.energia())
+    assert.equals(agua, martin.enLaDespensa())
+    assert.notThat(martin.tieneHambre())
+    assert.that(martin.estaFeliz())
+}
+
+test "Martin se alimenta pero solo tiene agua" {
+    martin.alimantarse()
+    assert.equals(80, martin.energia())
+    assert.equals(agua, martin.enLaDespensa())
+    assert.that(martin.tieneHambre())
+    assert.notThat(martin.estaFeliz())
+}
+
+test "Martin juega al voley 15 minutos" {
+  voley.cantidadDeMinutos(15)
+  martin.hacerDeporte(voley)
+  assert.equals(80 - 30, martin.energia())
+  assert.equals(1, martin.cantidadActividades())
+}
+
+test "Martin futbol come mandarina" {
+  futbol.energia(25)
+  martin.hacerDeporte(futbol)
+  mandarina.peso(100)
+  martin.comprar(mandarina)
+  martin.alimantarse()
+  assert.equals(80 - 25 + 20, martin.energia())
+  assert.notThat(martin.estaFeliz())
+  assert.equals(1, martin.cantidadActividades())
+}
+
+test "Martin se va a dormir" {
+  martin.comprar(manzana)
+  martin.dormir()
+  assert.equals(80 * 1.5, martin.energia())
+  assert.equals(5, manzana.energia())
+}
